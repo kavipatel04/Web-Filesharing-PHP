@@ -1,0 +1,10 @@
+.noPadding
+{
+
+border: 5px solid brown;
+}
+.padding
+{
+width:300px;
+padding: 10px 10px 10px 10px;
+}
