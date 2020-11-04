@@ -46,6 +46,7 @@ if(isset($_POST['submit_pass']) && $_POST['pass'])
     //Client Now authorized
    $key = array_search($pass, $allPasscodes); //id for all of the clients info
    $_SESSION['password']=$pass;
+   $_SESSION['name'] = $allNames[$key];
  }
  else
  {
@@ -74,7 +75,7 @@ if(in_array($_SESSION['password'], $allPasscodes))
 {
  ?>
  <?php
- echo "<h1>Hi " .$allNames[$key] ."</h1>";
+ echo "<h1>Hi " .$_SESSION['name'] ."</h1>";
  
  $dirname = "photos/";
  $images = glob($dirname."*.jpg");
