@@ -36,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 echo "Redirecting back to main page now!";
 sleep(5);
-header("refresh:10; url=password.php");
+header("refresh:5; url=index.php");
 exit();
 
 ?>

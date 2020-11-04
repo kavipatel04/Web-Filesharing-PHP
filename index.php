@@ -1,4 +1,5 @@
 <?php
+session_start();
 $servername = "localhost";
 $username = "php";
 $password = "kavip2004";
@@ -22,13 +23,15 @@ if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
         $allIDS[] = $row["id"];
-	$allNames[] = $row["name"];
+	    $allNames[] = $row["name"];
         $allPaths[] = $row["path"];
-	$allPasscodes[] = $row["passcode"];
+	    $allPasscodes[] = $row["passcode"];
     }
 } else {
     echo "0 results, possible SQL Connection fail";
 }
+$_SESSION['ALLNAMES'] = $allNames;
+$_SESSION['ALLPASSCODES'] = $allPasscodes;
 $conn->close();
 ?>
 
@@ -36,7 +39,6 @@ $conn->close();
 
 
 <?php
-session_start();
 
 if(isset($_POST['submit_pass']) && $_POST['pass'])
 {
@@ -96,7 +98,7 @@ $images = glob($dirname."*.png");
  <form method="post" action="" id="logout_form">
   <input type="submit" name="page_logout" value="LOGOUT">
   <input type="submit" name="button1" value="Download as Zip" />
-  <input type="submit" name="button2" value="Refresh Zip File and File Permissions" />
+  <input type="submit" name="button2" value="Refresh Zip File" />
  </form>
 <link rel="stylesheet" type="text/css" href="password_style.css">
 <form action="upload-manager.php" method="post" enctype="multipart/form-data">
@@ -138,9 +140,10 @@ else
  <form method="post" action="" id="login_form">
   <h1>Login Below</h1>
   <input type="password" name="pass" placeholder="*******">
-  <input type="submit" name="submit_pass" value="DO SUBMIT">
-  <p>"Password : 123"</p>
+  <input type="submit" name="submit_pass" value="Login">
+  <p>Enter Access Code</p>
   <p><font style="color:red;"><?php echo $error;?></font></p>
+  <p><a href = 'register.php'>To Register an Account Click Here</a></p>
  </form>
  <?php	
 }
