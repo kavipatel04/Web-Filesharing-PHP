@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Check if the form was submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check if file was uploaded without errors
@@ -19,11 +20,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         // Verify MYME type of the file
         if(in_array($filetype, $allowed)){
             // Check whether file exists before uploading it
-            if(file_exists("photos/" . $filename)){
-                echo $filename . " is already exists.";
+            if(file_exists($_SESSION['path'] . '/' . $filename)){
+                echo $filename . " already exists.";
             } else{
-                move_uploaded_file($_FILES["photo"]["tmp_name"], "photos/" . $filename);
-                echo "Your file was uploaded successfully.";
+                move_uploaded_file($_FILES["photo"]["tmp_name"],  $_SESSION['path'] . '/' . $filename);
+                echo "Your file was uploaded successfully. </br>";
+                echo $_SESSION['path'] . '/' . $filename . '</br>';
             } 
         } else{
             echo "Error: There was a problem uploading your file. Please try again."; 
@@ -34,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 echo "Redirecting back to main page now!";
 sleep(5);
-header("Location: https://kavipatel.xyz/assets/microProtector/testdir/password.php");
+header("refresh:10; url=password.php");
 exit();
 
 ?>

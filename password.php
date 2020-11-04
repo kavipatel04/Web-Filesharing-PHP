@@ -47,6 +47,7 @@ if(isset($_POST['submit_pass']) && $_POST['pass'])
    $key = array_search($pass, $allPasscodes); //id for all of the clients info
    $_SESSION['password']=$pass;
    $_SESSION['name'] = $allNames[$key];
+   $_SESSION['path'] = $allPaths[$key];
  }
  else
  {
@@ -77,7 +78,7 @@ if(in_array($_SESSION['password'], $allPasscodes))
  <?php
  echo "<h1>Hi " .$_SESSION['name'] ."</h1>";
  
- $dirname = "photos/";
+ $dirname = $_SESSION['path'] . '/';
  $images = glob($dirname."*.jpg");
  
  foreach($images as $image) {
@@ -95,7 +96,7 @@ $images = glob($dirname."*.png");
  <form method="post" action="" id="logout_form">
   <input type="submit" name="page_logout" value="LOGOUT">
   <input type="submit" name="button1" value="Download as Zip" />
-  <input type="submit" name="button2" value="Refresh Zip File" />
+  <input type="submit" name="button2" value="Refresh Zip File and File Permissions" />
  </form>
 <link rel="stylesheet" type="text/css" href="password_style.css">
 <form action="upload-manager.php" method="post" enctype="multipart/form-data">
@@ -107,7 +108,7 @@ $images = glob($dirname."*.png");
 <?php
 
 if(array_key_exists('button1', $_POST)) { 
-   $zip_file = 'photos.zip';
+   $zip_file = $_SESSION['path'] . '/photos.zip';
    header('Content-type: application/zip');
 	header('Content-Disposition: attachment; filename="'.basename($zip_file).'"');
 	header("Content-length: " . filesize($zip_file));
@@ -121,7 +122,7 @@ if(array_key_exists('button1', $_POST)) {
 
 } 
 if(array_key_exists('button2', $_POST)) { 
-   $output = shell_exec('sudo bash zipScript.sh');
+   $output = shell_exec('sudo bash zipScript.sh ' . $_SESSION['path']);
    echo $output;
    echo "Package has been zipped up successfully";
 }
@@ -129,10 +130,7 @@ if(array_key_exists('button2', $_POST)) {
 ?>
 
  <?php
-}elseif($_SESSION['password']=="456"){
-echo "Second user in";
 }
-
 else
 {
  ?>
